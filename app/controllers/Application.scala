@@ -14,16 +14,17 @@ object Application extends Controller {
   def index = Action { request =>
     Ok(views.html.index(request.host))
   }
-  
+
+  val dueDate = new SimpleDateFormat("yyyy-MM-dd")
   //2012-12-14T15:59:09.145+0100
-  val jiraDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+  implicit val jiraDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
   //2012-12-13 12:15:05
   val sladiatorDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
-  def toSladiatorDate(date: JsValue): JsValue =
+  def toSladiatorDate(date: JsValue)(implicit source:SimpleDateFormat): JsValue =
     toJson(
       date.asOpt[String]
-        .map(date => sladiatorDateFormat format (jiraDateFormat parse date)))
+        .map(date => sladiatorDateFormat format (source parse date)))
 
   def webhook(token:String) = Action { request =>
 
@@ -51,7 +52,7 @@ object Application extends Controller {
         ("assignee_email", fields \ "assignee" \ "emailAddress"),
         ("resolution", fields \ "resolution"),
         ("resolution_date", toSladiatorDate(fields \ "resolutiondate")),
-        ("due_date", toSladiatorDate(fields \ "duedate")),
+        ("due_date", toSladiatorDate(fields \ "duedate")(dueDate)),
         ("components", toJson(fields \ "components" \\ "name")),
         ("labels", fields \ "labels"),
         ("labels", fields \ "labels"),
