@@ -1,7 +1,47 @@
-@(message: String)
+@(host:String)
 
-@main("Welcome to Play 2.0") {
-    
-    @play20.welcome(message)
-    
-}
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Jira to Sladiator</title>
+		<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css' />
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.ico")">
+    </head>
+    <body>
+        <header id="header">
+			<div class="container">
+				<img class="logo" src="@routes.Assets.at("images/logo.png")" />
+				<span class="title">Jira to Sladiator</span>
+				<a href="http://www.frank-ly.nl" title="Ga naar frank-ly.nl, het corporate weblog van Rhinofly">
+					<img class="frank-ly" src="@routes.Assets.at("images/frankly.png")" />
+				</a>
+			</div>
+		</header>
+		
+		<div class="container">
+			<section>
+				<h1>Description</h1>
+				<p>
+					This is a free site to be used as a proxy from Jira webhooks to the API of 
+					sladiator.
+				</p>
+				<p>
+					More information about Jira webhooks: <a href="https://developer.atlassian.com/display/JIRADEV/JIRA+Webhooks+Overview">https://developer.atlassian.com/display/JIRADEV/JIRA+Webhooks+Overview</a><br />
+					More information about the sladiator API: <a href="https://sladiator.com/forums/tips-tricks/topics/public-api">https://sladiator.com/forums/tips-tricks/topics/public-api</a>
+				</p>
+			</section>
+
+			<section>
+				<h1>Usage</h1>
+				<p>
+					Simply point your Jira webhook to: <code>http://@host/webhook/{SLA Token}</code>
+				</p>
+				<p>
+					An example: <code>http://@host/webhook/4bx60a464xd23b5x2ad715cc1fc059be8cc1a9eb</code>
+				</p>
+			</section>
+		</div>
+    </body>
+</html>

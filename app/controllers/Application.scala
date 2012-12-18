@@ -1,17 +1,23 @@
 package controllers
 
-import play.api._
-import play.api.mvc._
-import play.api.libs.json.Json._
-import play.api.libs.ws.WS
 import java.text.SimpleDateFormat
+
+import play.api.libs.json.Json.toJson
 import play.api.libs.json.JsValue
+import play.api.libs.ws.WS
+import play.api.mvc.Action
+import play.api.mvc.Controller
+import play.api.Logger
 
 object Application extends Controller {
 
+  def index = Action { request =>
+    Ok(views.html.index(request.host))
+  }
+  
   //2012-12-14T15:59:09.145+0100
   val jiraDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-  //"2012-12-13 12:15:05"
+  //2012-12-13 12:15:05
   val sladiatorDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
   def toSladiatorDate(date: JsValue): JsValue =
@@ -19,8 +25,7 @@ object Application extends Controller {
       date.asOpt[String]
         .map(date => sladiatorDateFormat format (jiraDateFormat parse date)))
 
-  def index = Action { request =>
-    //Logger info (request.body.asJson map (_.toString)).getOrElse("no data")
+  def webhook(token:String) = Action { request =>
 
     request.body.asJson foreach { json =>
       val jiraIssue = json \ "issue"
@@ -54,7 +59,7 @@ object Application extends Controller {
 
       val result = WS
         .url("https://sladiator.com/api/tickets")
-        .withHeaders("SLA_TOKEN" -> "4bfff60a464d23b52ad715cc1fc059be8cc1a9eb")
+        .withHeaders("SLA_TOKEN" -> token)
         .post(sladiatorIssue)
 
       result onRedeem { response =>
