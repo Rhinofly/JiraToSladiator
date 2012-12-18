@@ -34,10 +34,10 @@
 			<section>
 				<h1>Usage</h1>
 				<p>
-					Simply point your Jira webhook to: <code>http://@host/webhook/{SLA Token}</code>
+					Simply point your Jira webhook to: <code>http://@(host + routes.Application.webhook("{SLA Token}").url)</code>
 				</p>
 				<p>
-					An example: <code>http://@host/webhook/4bx60a464xd23b5x2ad715cc1fc059be8cc1a9eb</code>
+					An example: <code>http://@(host + routes.Application.webhook("4bx60a464xd23b5x2ad715cc1fc059be8cc1a9eb").url)</code>
 				</p>
 			</section>
 
