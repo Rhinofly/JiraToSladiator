@@ -53,6 +53,7 @@ section {
 	text-shadow: 0 1px 0 #FFF;
 	clear: both; 
 	padding-top: 30px;
+	text-align: center;
 }
 
 code { font-family: monospace, serif; _font-family: 'courier new', monospace; font-size: 1em; }
