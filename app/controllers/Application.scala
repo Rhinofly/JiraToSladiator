@@ -50,7 +50,7 @@ object Application extends Controller {
         ("assignee", fields \ "assignee" \ "name"),
         ("assignee_avatar_url", fields \ "assignee" \ "avatarUrls" \ "48x48"),
         ("assignee_email", fields \ "assignee" \ "emailAddress"),
-        ("resolution", fields \ "resolution"),
+        ("resolution", fields \ "resolution" \ "name"),
         ("resolution_date", toSladiatorDate(fields \ "resolutiondate")),
         ("due_date", toSladiatorDate(fields \ "duedate")(dueDate)),
         ("components", toJson(fields \ "components" \\ "name")),
