@@ -8,11 +8,11 @@ object ApplicationBuild extends Build {
     val appVersion      = "1.0-SNAPSHOT"
 
     val appDependencies = Seq(
-      // Add your project dependencies here,
+      "com.lunatech" %% "json-compare" % "1.0" % "test"
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
-      // Add your own project settings here      
+      resolvers += "Lunatech Artifactory" at "http://artifactory.lunatech.com/artifactory/releases-public"      
     )
 
 }

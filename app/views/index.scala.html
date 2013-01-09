@@ -29,15 +29,41 @@
 					This is a free site that can be used as a proxy from <a href="www.atlassian.com/JIRA">Jira</a>
 					webhooks to the API of <a href="http://sladiator.com/">Sladiator</a>.
 				</p>
+				<p>
+					When this application is called by a webhook it will go back to Jira's API to fetch the required issue 
+					information. This information is then converted to Sladiator API information and posted to Sladiator.
+				</p>
 			</section>
 
 			<section>
 				<h1>Usage</h1>
 				<p>
-					Simply point your Jira webhook to: <code>http://@(host + routes.Application.webhook("{SLA Token}").url)</code>
+					Simply point your Jira webhook to:<br />
+					<code>http://@(host + routes.Application.webhook("{SLA Token}", "${issue.key}", "{jira host}", "{jira username}", "{jira password}").url)</code>
 				</p>
 				<p>
-					An example: <code>http://@(host + routes.Application.webhook("4bx60a464xd23b5x2ad715cc1fc059be8cc1a9eb").url)</code>
+					You can enable the <strong>Exclude issue details from the POST to URL</strong> option.
+				</p>
+				<p>
+					Note that we do not store the information in the request in any way. You can check the source code to see how we use it.
+				</p>
+				<p>
+					An example:<br />
+					<code>http://@(host + routes.Application.webhook("4bx60a464xd23b5x2ad715cc1fc059be8cc1a9eb", "${issue.key}", "rhinofly.atlassian.net", "api_readonly", "n3E_irTt0a7X*").url)</code>
+				</p>
+			</section>
+			
+			<section>
+				<h1>Troubleshooting</h1>
+				<p>
+					You can use the 'testJiraApi' action to test the connection with Jira.
+				</p>
+				<p>
+					An example:<br />
+					http://@(host + routes.Application.testJiraApi("DEMO-1", "rhinofly.atlassian.net", "api_readonly", "n3E_irTt0a7X*"))
+				</p>
+				<p>
+					For issues and feature requests see this page: <a href="https://github.com/Rhinofly/JiraToSladiator/issues">https://github.com/Rhinofly/JiraToSladiator/issues</a> 
 				</p>
 			</section>
 
