@@ -18,6 +18,7 @@ object ApplicationBuild extends Build {
     "com.typesafe" % "config" % "1.0.0")
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
-    resolvers += "Lunatech Artifactory" at "http://artifactory.lunatech.com/artifactory/releases-public")
+    resolvers += "Lunatech Artifactory" at "http://artifactory.lunatech.com/artifactory/releases-public",
+    resolvers += "Rhinofly Internal Repository" at "http://maven-repository.rhinofly.net:8081/artifactory/libs-release-local")
 
 }
