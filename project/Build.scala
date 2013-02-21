@@ -9,6 +9,7 @@ object ApplicationBuild extends Build {
 
   val appDependencies = Seq(
     "com.lunatech" %% "json-compare" % "1.0" % "test",
+    "nl.rhinofly" %% "jira-exception-processor" % "2.0.1",
     // Play 2.0.4 uses Akka 2.0.2, which has an old internal typesafe-config lib,
     // that doesn't support explicit resource() urls.
     // We use a newer version of Akka, so we can use the newer and external typesafe config library.

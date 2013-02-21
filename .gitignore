@@ -8,3 +8,4 @@ bin
 .settings
 logs
 /.cache
+conf/overrides.conf
