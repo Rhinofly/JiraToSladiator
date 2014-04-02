@@ -11,6 +11,7 @@ import play.api.libs.json.JsArray
 import com.ning.http.client.Realm
 import play.api.http.ContentTypes
 import play.api.libs.json.JsString
+import play.api.Play
 
 object Application extends Controller {
 
@@ -68,7 +69,7 @@ object Application extends Controller {
           "status" -> JsString(transition.to),
           "entered_at" -> toSladiatorDate(transition.date))
 
-        // replace the previous transition 
+        // replace the previous transition
         val newTransitions =
           previousSladiatorTransition map { previousTransition =>
             (transitions dropRight 1) :+ previousTransition
@@ -131,15 +132,17 @@ object Application extends Controller {
   }
 
   def webhook(sladiatorToken: String, issueKey: String, host:String, jiraUsername: String, jiraPassword: String) = Action {
-    
+
+    Logger.info("webhook called for host: " + host)
+
     val issueInformation = getIssueInformation(issueKey, host, jiraUsername, jiraPassword)
 
     issueInformation onRedeem { response =>
       response.status match {
-        
+
         // call the sladiator web service
         case 200 => {
-          
+
           val sladiatorIssue = convert(response.json, host)
 
           val result = WS
